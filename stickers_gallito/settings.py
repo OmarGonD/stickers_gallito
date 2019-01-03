@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'stripe',
     'order',
     'crispy_forms',
+    'embed_video',
 
 ]
 
@@ -95,6 +96,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'stikers_db',
+        # 'USER': 'stikers',
+        # 'PASSWORD': 'stikers2018',
+        # 'HOST': 'db',
+        # 'PORT': '5432',
     }
 }
 
