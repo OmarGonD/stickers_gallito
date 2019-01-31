@@ -156,12 +156,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 
-### Stripe Settings ###
-
-
-STRIPE_PUBLISHABLE_KEY = 'pk_test_N0ksyIuO5d1ulLDuoMlLiU26'
-
-STRIPE_SECRET_KEY = 'sk_test_fFHncrzOzBPS3XxDQM0TWMfy'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
