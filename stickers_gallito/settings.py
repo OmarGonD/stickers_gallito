@@ -84,14 +84,14 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'stikers_db',
-        # 'USER': 'stikers',
-        # 'PASSWORD': 'stikers2018',
-        # 'HOST': 'db',
-        # 'PORT': '5432' ,
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ddl7v8vi4kdkip',
+        'USER': 'u6sic8t2nrdejq',
+        'PASSWORD': 'p72e949360dda1614aabf9a51b531d0c4a5f06ecc7e6528e8454f81687b7a321d',
+        'HOST': 'ec2-54-157-94-8.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
