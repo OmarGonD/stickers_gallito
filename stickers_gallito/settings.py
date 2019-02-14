@@ -93,7 +93,7 @@ DATABASES = {
         'HOST': 'ec2-54-157-94-8.compute-1.amazonaws.com',
         'PORT': '5432',
         'OPTIONS': {
-            'sslmodule': 'require'
+            'sslmodule': 'required'
         }
     }
 }
