@@ -1,5 +1,5 @@
 
-
+import django_heroku
 import os
 
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -149,7 +150,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 MEDIA_URL = '/media/'
@@ -168,3 +170,5 @@ CULQI_PUBLISHABLE_KEY = 'pk_test_d4d1nYriXvMV0YKk'
 
 CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
 
+# Activate Django-Heroku.
+django_heroku.settings(locals())
