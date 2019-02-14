@@ -92,6 +92,9 @@ DATABASES = {
         'PASSWORD': 'p72e949360dda1614aabf9a51b531d0c4a5f06ecc7e6528e8454f81687b7a321d',
         'HOST': 'ec2-54-157-94-8.compute-1.amazonaws.com',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require'
+        }
     }
 }
 
