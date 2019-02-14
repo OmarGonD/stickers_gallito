@@ -170,5 +170,4 @@ CULQI_PUBLISHABLE_KEY = 'pk_test_d4d1nYriXvMV0YKk'
 
 CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+
