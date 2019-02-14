@@ -91,7 +91,7 @@ DATABASES = {
         # 'USER': 'stikers',
         # 'PASSWORD': 'stikers2018',
         # 'HOST': 'db',
-        # 'PORT': '5432',
+        # 'PORT': '5432' ,
     }
 }
 
