@@ -17,7 +17,7 @@ SECRET_KEY = '^_67&#r+(c+%pu&n+a%&dmxql^i^_$0f69)mnhf@)zq-rbxe9z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['stickers-gallito-app.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com']
 
 
 # Application definition
@@ -94,6 +94,12 @@ DATABASES = {
         # 'PORT': '5432',
     }
 }
+
+
+# add this
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
