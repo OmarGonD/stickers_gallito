@@ -18,7 +18,7 @@ SECRET_KEY = '^_67&#r+(c+%pu&n+a%&dmxql^i^_$0f69)mnhf@)zq-rbxe9z'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com',
-                 'stickersgallito.pe']
+                 'stickersgallito.pe', 'www.stickersgallito.pe']
 
 
 # Application definition
