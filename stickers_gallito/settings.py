@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'order',
     'crispy_forms',
     'embed_video',
+    'storages',
 
 ]
 
@@ -152,7 +153,20 @@ STATICFILES_DIRS = (
 )
 
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
+# you run `collectstatic`).
+
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 
 MEDIA_URL = '/media/'
@@ -171,4 +185,21 @@ CULQI_PUBLISHABLE_KEY = 'pk_test_d4d1nYriXvMV0YKk'
 
 CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
 
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+
+AWS_STORAGE_BUCKET_NAME = 'stickers-gallito-uploaded-files'
+AWS_S3_REGION_NAME = 'us-east-2'  # e.g. us-east-2
+AWS_ACCESS_KEY_ID = 'AKIAIBEFOVBMRVXVVAJA'
+AWS_SECRET_ACCESS_KEY = 'D1pp2k8TnIwOCGSSUNgeUbBkmI7FsDLz8h40iFla'
+
+# Tell django-storages the domain to use to refer to static files.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# DO NOT DO THIS!
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
