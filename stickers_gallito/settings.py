@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^_67&#r+(c+%pu&n+a%&dmxql^i^_$0f69)mnhf@)zq-rbxe9z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com',
                  'stickersgallito.pe', 'www.stickersgallito.pe']
@@ -212,3 +212,4 @@ CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
 # DO NOT DO THIS!
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+SECURE_SSL_REDIRECT = True
