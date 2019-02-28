@@ -85,6 +85,9 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
+### HEROKU POSTGRESS ACCESS
+
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -101,6 +104,8 @@ DATABASES = {
     }
 }
 
+
+####
 
 # add this
 # import dj_database_url
@@ -167,6 +172,22 @@ STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+
+### Amazon S3
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+
+AWS_STORAGE_BUCKET_NAME = 'stickers-gallito-uploaded-files'
+AWS_S3_REGION_NAME = 'us-east-2'  # e.g. us-east-2
+# Tell django-storages the domain to use to refer to static files.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+####
 
 
 MEDIA_URL = '/media/'
