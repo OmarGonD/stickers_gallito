@@ -212,4 +212,10 @@ CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
 # DO NOT DO THIS!
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
+
+
+
+
+
+
