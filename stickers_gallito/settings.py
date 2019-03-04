@@ -199,20 +199,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-### Culqui Settings ###
-
-
-CULQI_PUBLISHABLE_KEY = 'pk_test_d4d1nYriXvMV0YKk'
-
-CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
-
-
-
-
 # DO NOT DO THIS!
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 
 
 
