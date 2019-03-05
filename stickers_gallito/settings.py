@@ -216,7 +216,11 @@ CULQI_SECRET_KEY = S3Connection(os.environ['CULQI_SECRET_KEY'])
 # DO NOT DO THIS!
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+
+#Redirecciona www y http  a https
 SECURE_SSL_REDIRECT = True
+
+
 
 
 
