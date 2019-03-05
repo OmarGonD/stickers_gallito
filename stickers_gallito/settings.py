@@ -207,6 +207,11 @@ CULQI_PUBLISHABLE_KEY = S3Connection(os.environ['CULQI_PUBLISHABLE_KEY'])
 
 CULQI_SECRET_KEY = S3Connection(os.environ['CULQI_SECRET_KEY'])
 
+# CULQI_PUBLISHABLE_KEY = "test"
+#
+# CULQI_SECRET_KEY = "test"
+
+
 
 # DO NOT DO THIS!
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
