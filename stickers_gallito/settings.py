@@ -2,6 +2,7 @@
 
 import os
 
+from boto.s3.connection import S3Connection
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -197,6 +198,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+### CULQUI ###
+
+
+CULQI_PUBLISHABLE_KEY = S3Connection(os.environ['CULQI_PUBLISHABLE_KEY'])
+
+CULQI_SECRET_KEY = S3Connection(os.environ['CULQI_SECRET_KEY'])
 
 
 # DO NOT DO THIS!
