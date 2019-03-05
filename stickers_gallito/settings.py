@@ -94,7 +94,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd39a83vqn3afdj',
+        'NAME': 'ddvdrmi0vj51t1',
         'USER': 'u411dcl7sjn1gv',
         'PASSWORD': 'p7b6265f772f4c45a5c881a1d7b7fef659703707cadb6fd2d8696f642015fbac1',
         'HOST': 'ec2-34-226-163-183.compute-1.amazonaws.com',
