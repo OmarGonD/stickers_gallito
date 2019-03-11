@@ -199,6 +199,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+### AMAZON ###
+
+# AWS_ACCESS_KEY_ID = S3Connection(os.environ['AWS_ACCESS_KEY_ID'])
+#
+# AWS_SECRET_ACCESS_KEY = S3Connection(os.environ['AWS_SECRET_ACCESS_KEY'])
+#
+
+
 ### CULQUI ###
 
 
@@ -217,10 +225,10 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 #Redirecciona www y http  a https
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
