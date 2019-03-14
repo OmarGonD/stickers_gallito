@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'embed_video',
     'storages',
-
+    'marketing',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +61,8 @@ TEMPLATES = [
                  os.path.join(BASE_DIR, 'shop', 'templates/'),
                  os.path.join(BASE_DIR, 'search_app', 'templates/'),
                  os.path.join(BASE_DIR, 'cart', 'templates/'),
-                 os.path.join(BASE_DIR, 'order', 'templates/'),]
+                 os.path.join(BASE_DIR, 'order', 'templates/'),
+                 os.path.join(BASE_DIR, 'marketing', 'templates/'),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -210,13 +211,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 ### CULQUI ###
 
 
-# CULQI_PUBLISHABLE_KEY = S3Connection(os.environ['CULQI_PUBLISHABLE_KEY'])
+CULQI_PUBLISHABLE_KEY = S3Connection(os.environ['CULQI_PUBLISHABLE_KEY'])
+
+CULQI_SECRET_KEY = S3Connection(os.environ['CULQI_SECRET_KEY'])
+
+# CULQI_PUBLISHABLE_KEY = "test"
 #
-# CULQI_SECRET_KEY = S3Connection(os.environ['CULQI_SECRET_KEY'])
-
-CULQI_PUBLISHABLE_KEY = "test"
-
-CULQI_SECRET_KEY = "test"
+# CULQI_SECRET_KEY = "test"
 
 
 
@@ -225,13 +226,24 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 #Redirecciona www y http  a https
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+MAILCHIMP_API_KEY = S3Connection(os.environ['MAILCHIMP_API_KEY'])
+MAILCHIMP_DATA_CENTER = S3Connection(os.environ['MAILCHIMP_DATA_CENTER'])
+MAILCHIMP_EMAIL_LIST_ID = S3Connection(os.environ['MAILCHIMP_EMAIL_LIST_ID'])
 
 
 
+### EMAIL MESSAGE SETTINGS ###
+
+EMAIL_HOST = S3Connection(os.environ['EMAIL_HOST'])
+EMAIL_PORT = S3Connection(os.environ['EMAIL_PORT'])
+EMAIL_USE_TLS = S3Connection(os.environ['EMAIL_USE_TLS'])
+EMAIL_HOST_USER = S3Connection(os.environ['EMAIL_HOST_USER'])
+EMAIL_HOST_PASSWORD = S3Connection(os.environ['EMAIL_HOST_PASSWORD'])
 
 
 
