@@ -248,15 +248,15 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 ### EMAIL MESSAGE SETTINGS ###
 
-# EMAIL_HOST = S3Connection(os.environ['EMAIL_HOST'])
-# EMAIL_PORT = S3Connection(os.environ['EMAIL_PORT'])
-# EMAIL_USE_TLS = S3Connection(os.environ['EMAIL_USE_TLS'])
-# EMAIL_HOST_USER = S3Connection(os.environ['EMAIL_HOST_USER'])
-# EMAIL_HOST_PASSWORD = S3Connection(os.environ['EMAIL_HOST_PASSWORD'])
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
 
-EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'postmaster@email.stickersgallito.pe'
-EMAIL_HOST_PASSWORD = "0e72c0deb828b9f57112933a40c5d649-de7062c6-c8a2023e"
+# EMAIL_HOST = "smtp.mailgun.org"
+# EMAIL_PORT = '587'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'postmaster@email.stickersgallito.pe'
+# EMAIL_HOST_PASSWORD = "0e72c0deb828b9f57112933a40c5d649-de7062c6-c8a2023e"
