@@ -233,11 +233,6 @@ MAILCHIMP_EMAIL_LIST_ID = S3Connection(os.environ['MAILCHIMP_EMAIL_LIST_ID'])
 ### AMAZON ###
 
 
-AWS_ACCESS_KEY_ID = S3Connection(os.environ['AWS_ACCESS_KEY_ID'])
-
-AWS_SECRET_ACCESS_KEY = S3Connection(os.environ['AWS_SECRET_ACCESS_KEY'])
-
-
 
 ### EMAIL MESSAGE SETTINGS ###
 
