@@ -218,26 +218,44 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 #Redirecciona www y http  a https
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-MAILCHIMP_API_KEY = S3Connection(os.environ['MAILCHIMP_API_KEY'])
-MAILCHIMP_DATA_CENTER = S3Connection(os.environ['MAILCHIMP_DATA_CENTER'])
-MAILCHIMP_EMAIL_LIST_ID = S3Connection(os.environ['MAILCHIMP_EMAIL_LIST_ID'])
 
-
+MAILCHIMP_API_KEY = "b87c5a8b98831568e12087f9a8a8b49b-us20"
+MAILCHIMP_DATA_CENTER = 'us20'
+MAILCHIMP_EMAIL_LIST_ID = '9137cdc305'
 
 ### AMAZON ###
 
 
+# AWS_ACCESS_KEY_ID = S3Connection(os.environ['AWS_ACCESS_KEY_ID'])
+#
+# AWS_SECRET_ACCESS_KEY = S3Connection(os.environ['AWS_SECRET_ACCESS_KEY'])
+
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+
+
+# AWS_ACCESS_KEY_ID = 'AKIAIOMYOFWZLUBDB3OA'
+# AWS_SECRET_ACCESS_KEY = '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'
+#
 
 ### EMAIL MESSAGE SETTINGS ###
 
-EMAIL_HOST = S3Connection(os.environ['EMAIL_HOST'])
-EMAIL_PORT = S3Connection(os.environ['EMAIL_PORT'])
-EMAIL_USE_TLS = S3Connection(os.environ['EMAIL_USE_TLS'])
-EMAIL_HOST_USER = S3Connection(os.environ['EMAIL_HOST_USER'])
-EMAIL_HOST_PASSWORD = S3Connection(os.environ['EMAIL_HOST_PASSWORD'])
+# EMAIL_HOST = S3Connection(os.environ['EMAIL_HOST'])
+# EMAIL_PORT = S3Connection(os.environ['EMAIL_PORT'])
+# EMAIL_USE_TLS = S3Connection(os.environ['EMAIL_USE_TLS'])
+# EMAIL_HOST_USER = S3Connection(os.environ['EMAIL_HOST_USER'])
+# EMAIL_HOST_PASSWORD = S3Connection(os.environ['EMAIL_HOST_PASSWORD'])
+
+
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'postmaster@email.stickersgallito.pe'
+EMAIL_HOST_PASSWORD = "0e72c0deb828b9f57112933a40c5d649-de7062c6-c8a2023e"
