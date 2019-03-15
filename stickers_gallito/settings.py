@@ -200,6 +200,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
+### AMAZON ###
+
+
+AWS_ACCESS_KEY_ID = S3Connection(os.environ['AWS_ACCESS_KEY_ID'])
+
+AWS_SECRET_ACCESS_KEY = S3Connection(os.environ['AWS_SECRET_ACCESS_KEY'])
+
+
 ### CULQUI ###
 
 
