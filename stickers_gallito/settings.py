@@ -5,6 +5,9 @@ import os
 from boto.s3.connection import S3Connection
 
 
+# SITE_ROOT = root()
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -175,19 +178,6 @@ MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 
-### Amazon S3
-
-AWS_S3_OBJECT_PARAMETERS = {
-    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-    'CacheControl': 'max-age=94608000',
-}
-
-
-AWS_STORAGE_BUCKET_NAME = 'stickers-gallito-uploaded-files'
-AWS_S3_REGION_NAME = 'us-east-2'  # e.g. us-east-2
-# Tell django-storages the domain to use to refer to static files.
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
 ####
 
 
@@ -218,35 +208,39 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 #Redirecciona www y http  a https
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 
-MAILCHIMP_API_KEY = "b87c5a8b98831568e12087f9a8a8b49b-us20"
-MAILCHIMP_DATA_CENTER = 'us20'
-MAILCHIMP_EMAIL_LIST_ID = '9137cdc305'
+MAILCHIMP_API_KEY = os.environ['MAILCHIMP_API_KEY']
+MAILCHIMP_DATA_CENTER = os.environ['MAILCHIMP_DATA_CENTER']
+MAILCHIMP_EMAIL_LIST_ID = os.environ['MAILCHIMP_EMAIL_LIST_ID']
 
 ### AMAZON ###
 
 
-# AWS_ACCESS_KEY_ID = S3Connection(os.environ['AWS_ACCESS_KEY_ID'])
-#
-# AWS_SECRET_ACCESS_KEY = S3Connection(os.environ['AWS_SECRET_ACCESS_KEY'])
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+
+
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
+# Tell django-storages the domain to use to refer to static files.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+
 
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 
 
-# AWS_ACCESS_KEY_ID = 'AKIAIOMYOFWZLUBDB3OA'
-# AWS_SECRET_ACCESS_KEY = '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'
-#
-
-
-### EMAIL MESSAGE SETTINGS ###
+### MAILGUN - EMAIL MESSAGE SETTINGS ###
 
 EMAIL_HOST = os.environ['EMAIL_HOST']
 EMAIL_PORT = os.environ['EMAIL_PORT']
@@ -255,8 +249,3 @@ EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
 
-# EMAIL_HOST = "smtp.mailgun.org"
-# EMAIL_PORT = '587'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'postmaster@email.stickersgallito.pe'
-# EMAIL_HOST_PASSWORD = "0e72c0deb828b9f57112933a40c5d649-de7062c6-c8a2023e"
