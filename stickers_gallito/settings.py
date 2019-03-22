@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'embed_video',
     'storages',
-    'marketing'
+    'marketing',
 
 ]
 
