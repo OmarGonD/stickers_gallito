@@ -2,7 +2,6 @@
 
 import os
 
-from boto.s3.connection import S3Connection
 
 
 # SITE_ROOT = root()
@@ -42,7 +41,7 @@ INSTALLED_APPS = [
     'embed_video',
     'storages',
     'marketing',
-
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -134,9 +133,9 @@ LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -189,10 +188,10 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 #Redirecciona www y http  a https
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
