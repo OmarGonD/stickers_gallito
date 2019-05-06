@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     # Redirecciona www y http  a https
@@ -104,10 +104,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'ddvdrmi0vj51t1',
-            'USER': 'u411dcl7sjn1gv',
-            'PASSWORD': 'p7b6265f772f4c45a5c881a1d7b7fef659703707cadb6fd2d8696f642015fbac1',
-            'HOST': 'ec2-34-226-163-183.compute-1.amazonaws.com',
+            'NAME': 'd8ss9rgh1sbaj',
+            'USER': 'knwpfelgydrsmq',
+            'PASSWORD': 'dcd65707c2746bd6842d79773dedc944bf570b3ec27039a81dd715be213b85ef',
+            'HOST': 'ec2-54-225-116-36.compute-1.amazonaws.com',
             'PORT': '5432'
         }
     }
