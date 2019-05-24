@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     # Redirecciona www y http  a https
