@@ -1,4 +1,5 @@
 import os
+from decouple import config
 
 # SITE_ROOT = root()
 
@@ -10,7 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^_67&#r+(c+%pu&n+a%&dmxql^i^_$0f69)mnhf@)zq-rbxe9z'
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com',
                  'stickersgallito.pe', 'www.stickersgallito.pe']
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+
 
 if DEBUG:
     # Redirecciona www y http  a https
