@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = '^_67&#r+(c+%pu&n+a%&dmxql^i^_$0f69)mnhf@)zq-rbxe9z'
+SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com',
@@ -106,11 +106,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['HEROKU_POSTGRESQL_NAME'],
-            'USER': os.environ['HEROKU_POSTGRESQL_USER'],
-            'PASSWORD': os.environ['HEROKU_POSTGRESQL_PASSWORD'],
-            'HOST': os.environ['HEROKU_POSTGRESQL_HOST'],
-            'PORT': os.environ['HEROKU_POSTGRESQL_PORT']
+            'NAME': config('HEROKU_POSTGRESQL_NAME'),
+            'USER': config('HEROKU_POSTGRESQL_USER'),
+            'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
+            'HOST': config('HEROKU_POSTGRESQL_HOST'),
+            'PORT': config('HEROKU_POSTGRESQL_PORT'),
         }
     }
 
