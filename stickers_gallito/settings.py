@@ -88,6 +88,17 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 if DEBUG:
     # Redirecciona www y http  a https
+    SECURE_SSL_REDIRECT = False
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+    
+else:
+    # Redirecciona www y http  a https
     SECURE_SSL_REDIRECT = True
 
     ### HEROKU POSTGRESS ACCESS
@@ -102,17 +113,7 @@ if DEBUG:
         }
     }
 
-else:
-
-    # Redirecciona www y http  a https
-    SECURE_SSL_REDIRECT = False
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+    
 
     
 
