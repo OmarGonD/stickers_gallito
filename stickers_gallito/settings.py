@@ -115,8 +115,8 @@ else:
 
     
 
- 
-    
+
+
 
 ####
 
@@ -161,7 +161,6 @@ MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 ####
-
 
 MEDIA_URL = '/media/'
 
