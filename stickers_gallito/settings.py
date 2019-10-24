@@ -115,9 +115,6 @@ else:
 
     
 
-
-
-
 ####
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -205,3 +202,9 @@ EMAIL_PORT = os.environ['EMAIL_PORT']
 EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+
+
+### manage.py check --deploy 
+
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
