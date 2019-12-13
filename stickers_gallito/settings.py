@@ -214,3 +214,4 @@ X_FRAME_OPTIONS = 'DENY'
 ### Promociones ###
 
 PACKS3X2 = os.environ['PACKS3X2']
+
