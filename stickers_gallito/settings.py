@@ -13,10 +13,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com',
-                 'stickersgallito.pe', 'www.stickersgallito.pe']
+                 'stickersgallito.pe', 'www.stickersgallito.pe', 'stickers-gallito-env.eba-cxi73ba5.us-west-1.elasticbeanstalk.com']
 
 # Application definition
 
@@ -84,7 +84,8 @@ WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
+print("##############################")
+print(os.environ["SECURE_SSL_REDIRECT"])
 
 if DEBUG:
     # Redirecciona www y http  a https
@@ -96,22 +97,28 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+
     
 else:
     # Redirecciona www y http  a https
     SECURE_SSL_REDIRECT = True
-
-    ### HEROKU POSTGRESS ACCESS
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': config('HEROKU_POSTGRESQL_NAME'),
-            'USER': config('HEROKU_POSTGRESQL_USER'),
-            'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
-            'HOST': config('HEROKU_POSTGRESQL_HOST'),
-            'PORT': config('HEROKU_POSTGRESQL_PORT'),
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    ### HEROKU POSTGRESS ACCESS
+    #"""DATABASES = {
+    #    'default': {
+    #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #        'NAME': config('HEROKU_POSTGRESQL_NAME'),
+    #        'USER': config('HEROKU_POSTGRESQL_USER'),
+    #        'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
+    #        'HOST': config('HEROKU_POSTGRESQL_HOST'),
+    #        'PORT': config('HEROKU_POSTGRESQL_PORT'),
+    #    }
+    #}"""
 
     
 
@@ -152,10 +159,10 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+#STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+#DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 ####
 
@@ -168,16 +175,16 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 ### CULQUI ###
 
 
-CULQI_PUBLISHABLE_KEY = os.environ['CULQI_PUBLISHABLE_KEY']
+CULQI_PUBLISHABLE_KEY = "" ##os.environ['CULQI_PUBLISHABLE_KEY']
 
-CULQI_SECRET_KEY = os.environ['CULQI_SECRET_KEY']
+CULQI_SECRET_KEY = '' #os.environ['CULQI_SECRET_KEY']
 
 # DO NOT DO THIS!
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-MAILCHIMP_API_KEY = os.environ['MAILCHIMP_API_KEY']
-MAILCHIMP_DATA_CENTER = os.environ['MAILCHIMP_DATA_CENTER']
-MAILCHIMP_EMAIL_LIST_ID = os.environ['MAILCHIMP_EMAIL_LIST_ID']
+MAILCHIMP_API_KEY = ''#os.environ['MAILCHIMP_API_KEY']
+MAILCHIMP_DATA_CENTER = ''#os.environ['MAILCHIMP_DATA_CENTER']
+MAILCHIMP_EMAIL_LIST_ID = ''#os.environ['MAILCHIMP_EMAIL_LIST_ID']
 
 ### AMAZON ###
 
@@ -187,20 +194,20 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=94608000',
 }
 
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
+#AWS_STORAGE_BUCKET_NAME = ''#os.environ['AWS_STORAGE_BUCKET_NAME']
+#AWS_S3_REGION_NAME = 'os'#os.environ['AWS_S3_REGION_NAME']
 # Tell django-storages the domain to use to refer to static files.
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+#AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+#AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+#AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 
 ### MAILGUN - EMAIL MESSAGE SETTINGS ###
 
 EMAIL_HOST = os.environ['EMAIL_HOST']
 EMAIL_PORT = os.environ['EMAIL_PORT']
-EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
