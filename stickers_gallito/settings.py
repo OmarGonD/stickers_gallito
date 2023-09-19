@@ -1,6 +1,7 @@
 import os
 from decouple import config
 
+
 # SITE_ROOT = root()
 
 
@@ -13,9 +14,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com',
+ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com', 'stickers-gallito-project-0c16758d6fa2.herokuapp.com',
                  'stickersgallito.pe', 'www.stickersgallito.pe', 'stickers-gallito-env.eba-cxi73ba5.us-west-1.elasticbeanstalk.com']
 
 # Application definition
@@ -30,24 +31,24 @@ INSTALLED_APPS = [
     'shop',
     'search_app',
     'cart',
-    'stripe',
     'order',
-    'crispy_forms',
-    'embed_video',
-    'storages',
     'marketing',
     'django.contrib.humanize',
+    'crispy_forms',
+    'crispy_bootstrap4'
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'stickers_gallito.urls'
@@ -77,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
+#WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -102,23 +103,18 @@ if DEBUG:
 else:
     # Redirecciona www y http  a https
     SECURE_SSL_REDIRECT = True
+
+    ### HEROKU POSTGRESS ACCESS
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': config('HEROKU_POSTGRESQL_NAME'),
+            'USER': config('HEROKU_POSTGRESQL_USER'),
+            'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
+            'HOST': config('HEROKU_POSTGRESQL_HOST'),
+            'PORT': config('HEROKU_POSTGRESQL_PORT'),
         }
     }
-    ### HEROKU POSTGRESS ACCESS
-    #"""DATABASES = {
-    #    'default': {
-    #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #        'NAME': config('HEROKU_POSTGRESQL_NAME'),
-    #        'USER': config('HEROKU_POSTGRESQL_USER'),
-    #        'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
-    #        'HOST': config('HEROKU_POSTGRESQL_HOST'),
-    #        'PORT': config('HEROKU_POSTGRESQL_PORT'),
-    #    }
-    #}"""
 
     
 
@@ -152,6 +148,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (
@@ -160,6 +158,23 @@ STATICFILES_DIRS = (
 
 STATICFILES_LOCATION = 'static'
 #STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+#STORAGES = {
+    # ...
+#    "staticfiles": {
+#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#    },
+#}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
 
 MEDIAFILES_LOCATION = 'media'
 #DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
