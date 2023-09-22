@@ -107,7 +107,7 @@ else:
     ### HEROKU POSTGRESS ACCESS
     DATABASES = {
         'default': {
-           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'ENGINE': 'django.db.backends.postgresql',
             'NAME': config('HEROKU_POSTGRESQL_NAME'),
             'USER': config('HEROKU_POSTGRESQL_USER'),
             'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
