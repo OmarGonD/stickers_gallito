@@ -1,33 +1,63 @@
 import os
 from decouple import config
+import os
+import secrets
+from pathlib import Path
 
+import dj_database_url
 
 # SITE_ROOT = root()
 
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = config('SECRET_KEY')
+
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    default=secrets.token_urlsafe(nbytes=64),
+)
+
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'stickers-gallito-app.herokuapp.com', 'stickers-gallito-project-0c16758d6fa2.herokuapp.com',
-                 'stickersgallito.pe', 'www.stickersgallito.pe', 'stickers-gallito-env.eba-cxi73ba5.us-west-1.elasticbeanstalk.com']
+
+# The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
+# also explicitly exclude CI:
+# https://devcenter.heroku.com/articles/heroku-ci#immutable-environment-variables
+IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
+
+# SECURITY WARNING: don't run with debug turned on in production!
+if not IS_HEROKU_APP:
+    DEBUG = True
+
+# On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
+# validation of the Host header in the incoming HTTP request. On other platforms you may need
+# to list the expected hostnames explicitly to prevent HTTP Host header attacks. See:
+# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-ALLOWED_HOSTS
+if IS_HEROKU_APP:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = []
+
 
 # Application definition
 
+
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # Use WhiteNoise's runserver implementation instead of the Django default, for dev-prod parity.
+    "whitenoise.runserver_nostatic",
+    # Uncomment this and the entry in `urls.py` if you wish to use the Django admin feature:
+    # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     'shop',
     'search_app',
     'cart',
@@ -38,18 +68,24 @@ INSTALLED_APPS = [
     'crispy_bootstrap4'
 ]
 
+
+
 MIDDLEWARE = [
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
-    #'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.middleware.security.SecurityMiddleware",
+    # Django doesn't support serving static assets in a production-ready way, so we use the
+    # excellent WhiteNoise package to do so instead. The WhiteNoise middleware must be listed
+    # after Django's `SecurityMiddleware` so that security redirects are still performed.
+    # See: https://whitenoise.readthedocs.io
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+
 
 ROOT_URLCONF = 'stickers_gallito.urls'
 
@@ -78,43 +114,54 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
+
+WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# SECURITY WARNING: don't run with debug turned on in production!
-print("##############################")
-print(os.environ["SECURE_SSL_REDIRECT"])
-
-if DEBUG:
-    # Redirecciona www y http  a https
+if IS_HEROKU_APP:
+    # In production on Heroku the database configuration is derived from the `DATABASE_URL`
+    # environment variable by the dj-database-url package. `DATABASE_URL` will be set
+    # automatically by Heroku when a database addon is attached to your Heroku app. See:
+    # https://devcenter.heroku.com/articles/provisioning-heroku-postgres
+    # https://github.com/jazzband/dj-database-url
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
+    }
+else:
+    # When running locally in development or in CI, a sqlite database file will be used instead
+    # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
     SECURE_SSL_REDIRECT = False
 
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
+
     }
 
-    
-else:
-    # Redirecciona www y http  a https
-    SECURE_SSL_REDIRECT = True
 
-    ### HEROKU POSTGRESS ACCESS
-    DATABASES = {
-        'default': {
-           'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('HEROKU_POSTGRESQL_NAME'),
-            'USER': config('HEROKU_POSTGRESQL_USER'),
-            'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
-            'HOST': config('HEROKU_POSTGRESQL_HOST'),
-            'PORT': config('HEROKU_POSTGRESQL_PORT'),
-        }
-    }
+
+### HEROKU POSTGRESS ACCESS
+    #DATABASES = {
+    #    'default': {
+    #       'ENGINE': 'django.db.backends.postgresql',
+    #        'NAME': config('HEROKU_POSTGRESQL_NAME'),
+    #        'USER': config('HEROKU_POSTGRESQL_USER'),
+    #        'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
+    #        'HOST': config('HEROKU_POSTGRESQL_HOST'),
+    #        'PORT': config('HEROKU_POSTGRESQL_PORT'),
+    #    }
+    #}
 
     
 
@@ -146,60 +193,46 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-STATICFILES_LOCATION = 'static'
-#STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-
-#STORAGES = {
-    # ...
-#    "staticfiles": {
-#        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#    },
-#}
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = "static/"
 
 STORAGES = {
+    # Enable WhiteNoise's GZip and Brotli compression of static assets:
+    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
+
     "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
 
-MEDIAFILES_LOCATION = 'media'
-#DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
-####
-
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-### CULQUI ###
+# Don't store the original (un-hashed filename) version of static files, to reduce slug size:
+# https://whitenoise.readthedocs.io/en/latest/django.html#WHITENOISE_KEEP_ONLY_HASHED_FILES
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 
-CULQI_PUBLISHABLE_KEY = "" ##os.environ['CULQI_PUBLISHABLE_KEY']
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-CULQI_SECRET_KEY = '' #os.environ['CULQI_SECRET_KEY']
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# DO NOT DO THIS!
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+### Acaba Heroku Docs
 
-MAILCHIMP_API_KEY = ''#os.environ['MAILCHIMP_API_KEY']
-MAILCHIMP_DATA_CENTER = ''#os.environ['MAILCHIMP_DATA_CENTER']
-MAILCHIMP_EMAIL_LIST_ID = ''#os.environ['MAILCHIMP_EMAIL_LIST_ID']
+#MEDIAFILES_LOCATION = 'media'
+
+#MEDIA_URL = '/media/'
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+
+#CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 ### AMAZON ###
 
@@ -236,4 +269,6 @@ X_FRAME_OPTIONS = 'DENY'
 ### Promociones ###
 
 PACKS3X2 = os.environ['PACKS3X2']
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
