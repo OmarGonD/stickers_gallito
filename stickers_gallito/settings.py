@@ -132,6 +132,7 @@ if IS_HEROKU_APP:
             'PORT': config('HEROKU_POSTGRESQL_PORT'),
         }
     }
+
 else:
     # When running locally in development or in CI, a sqlite database file will be used instead
     # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
