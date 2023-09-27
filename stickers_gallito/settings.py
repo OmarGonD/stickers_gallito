@@ -1,10 +1,10 @@
 import os
-from decouple import config
 import os
 import secrets
 from pathlib import Path
 
 import dj_database_url
+from decouple import config
 
 # SITE_ROOT = root()
 
@@ -22,8 +22,7 @@ SECRET_KEY = os.environ.get(
     default=secrets.token_urlsafe(nbytes=64),
 )
 
-DEBUG = config('DEBUG', default=False, cast=bool)
-
+#DEBUG = config('DEBUG', default=False, cast=bool)
 
 # The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
 # also explicitly exclude CI:
@@ -42,7 +41,6 @@ if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -68,8 +66,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap4'
 ]
 
-
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     # Django doesn't support serving static assets in a production-ready way, so we use the
@@ -84,8 +80,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-
 
 ROOT_URLCONF = 'stickers_gallito.urls'
 
@@ -114,7 +108,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'stickers_gallito.wsgi.application'
 
 # Database
@@ -130,11 +123,14 @@ if IS_HEROKU_APP:
     # https://devcenter.heroku.com/articles/provisioning-heroku-postgres
     # https://github.com/jazzband/dj-database-url
     DATABASES = {
-        "default": dj_database_url.config(
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        ),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('HEROKU_POSTGRESQL_NAME'),
+            'USER': config('HEROKU_POSTGRESQL_USER'),
+            'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
+            'HOST': config('HEROKU_POSTGRESQL_HOST'),
+            'PORT': config('HEROKU_POSTGRESQL_PORT'),
+        }
     }
 else:
     # When running locally in development or in CI, a sqlite database file will be used instead
@@ -149,21 +145,18 @@ else:
 
     }
 
-
-
 ### HEROKU POSTGRESS ACCESS
-    #DATABASES = {
-    #    'default': {
-    #       'ENGINE': 'django.db.backends.postgresql',
-    #        'NAME': config('HEROKU_POSTGRESQL_NAME'),
-    #        'USER': config('HEROKU_POSTGRESQL_USER'),
-    #        'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
-    #        'HOST': config('HEROKU_POSTGRESQL_HOST'),
-    #        'PORT': config('HEROKU_POSTGRESQL_PORT'),
-    #    }
-    #}
+# DATABASES = {
+#    'default': {
+#       'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': config('HEROKU_POSTGRESQL_NAME'),
+#        'USER': config('HEROKU_POSTGRESQL_USER'),
+#        'PASSWORD': config('HEROKU_POSTGRESQL_PASSWORD'),
+#        'HOST': config('HEROKU_POSTGRESQL_HOST'),
+#        'PORT': config('HEROKU_POSTGRESQL_PORT'),
+#    }
+# }
 
-    
 
 ####
 
@@ -211,12 +204,9 @@ STORAGES = {
     },
 }
 
-
-
 # Don't store the original (un-hashed filename) version of static files, to reduce slug size:
 # https://whitenoise.readthedocs.io/en/latest/django.html#WHITENOISE_KEEP_ONLY_HASHED_FILES
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -225,13 +215,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ### Acaba Heroku Docs
 
-#MEDIAFILES_LOCATION = 'media'
+# MEDIAFILES_LOCATION = 'media'
 
-#MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
 
-#CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 ### AMAZON ###
@@ -242,13 +232,13 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=94608000',
 }
 
-#AWS_STORAGE_BUCKET_NAME = ''#os.environ['AWS_STORAGE_BUCKET_NAME']
-#AWS_S3_REGION_NAME = 'os'#os.environ['AWS_S3_REGION_NAME']
+# AWS_STORAGE_BUCKET_NAME = ''#os.environ['AWS_STORAGE_BUCKET_NAME']
+# AWS_S3_REGION_NAME = 'os'#os.environ['AWS_S3_REGION_NAME']
 # Tell django-storages the domain to use to refer to static files.
-#AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-#AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-#AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+# AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 
 ### MAILGUN - EMAIL MESSAGE SETTINGS ###
@@ -259,16 +249,13 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
-
-### manage.py check --deploy 
+### manage.py check --deploy
 
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-
 
 ### Promociones ###
 
 PACKS3X2 = os.environ['PACKS3X2']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
